@@ -1,10 +1,16 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors'
 
 dotenv.config();
+const port = process.env.PORT;
+var corsOptions = {
+  origin: process.env.FRONTEND_URL,
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
 const app: Express = express();
-const port = process.env.PORT;
+app.use(cors(corsOptions))
 
 const votes = new Map<string, number>()
 

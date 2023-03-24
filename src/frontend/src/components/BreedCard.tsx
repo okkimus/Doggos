@@ -1,4 +1,5 @@
 import { useLoaderData } from "react-router-dom";
+import Votes from "./Votes";
 
 interface BreedImage {
     imageSources: Array<string>,
@@ -41,6 +42,7 @@ const BreedCard = () => {
             <h1 className="text-3xl font-bold underline mb-10">{ fullBreed }</h1>
             <img src={selectedImg} alt="A dog" className="w-3/5"></img>
             { !exactImagesFound ? <div className="text-red-600">No {fullBreed} found, showing random variant</div> : ""}
+            <Votes />
         </section>
     )
 }
