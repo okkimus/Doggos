@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
 
+interface Breed {
+    breedName: string,
+    variants: Array<string>
+}
+
 const BreedListing = () => {
-    const [breeds, setBreeds] = useState(null)
-    const [breedNames, setBreedNames] = useState<string[]>([])
+    const [breeds, setBreeds] = useState<Breed[]>([])
 
     const fetchBreeds = async () => {
         const res = await fetch("https://dog.ceo/api/breeds/list/all")
         const json = await res.json()
         const data = json.message
-        setBreeds(data)
-        setBreedNames(Object.keys(data))
+
+        const breedKeys = Object.keys(data)
+        const breedList = new Array<Breed>();
+        breedKeys.forEach(bk => {
+            const variants = data[bk] as Array<string>
+
+            if (variants.length > 0) {
+                variants.forEach(v => breedList.push({
+                    breedName: v + " " + bk,
+                    variants: variants.filter(variant => variant !== v)
+                }))
+            } else {
+                breedList.push({
+                    breedName: bk,
+                    variants: []
+                })
+            }
+        })
+        setBreeds(breedList)
     }
 
 
@@ -17,10 +38,24 @@ const BreedListing = () => {
     return (
         <section>
             <button onClick={fetchBreeds}>Fetch dem doggo breeds!</button>
-            { !breeds ?
-                <div>No data</div> :
-                breedNames.map(bn => <div>{bn}</div>)
-            }
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Breeds</th>
+                            <th>Subbreed</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        { !breeds ?
+                            <tr>Empty</tr> :
+                            breeds.map(b =>
+                            <tr>
+                                <td>{b.breedName}</td>
+                                <td>{b.variants.join(", ")}</td>
+                            </tr>)
+                        }
+                    </tbody>
+                </table>
         </section>
     );
 }
