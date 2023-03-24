@@ -5,7 +5,7 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "devcontainer",
-	"postCreateCommand": "cd src/frontend && npm install",
+	"postCreateCommand": "cd src/frontend && npm install && cd ../backend && npm install",
 	"workspaceFolder": "/workspace"
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
