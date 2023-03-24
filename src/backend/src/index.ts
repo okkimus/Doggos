@@ -1,6 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors'
+import bodyParser from 'body-parser';
 
 dotenv.config();
 const port = process.env.PORT;
@@ -11,6 +12,7 @@ var corsOptions = {
 
 const app: Express = express();
 app.use(cors(corsOptions))
+app.use(bodyParser.json())
 
 const votes = new Map<string, number>()
 
@@ -21,7 +23,9 @@ app.get('/votes/:breed', (req: Request, res: Response) => {
 
 app.post('/votes/:breed', (req: Request, res: Response) => {
   const breed = req.params.breed
-  const count = (votes.get(breed) ?? 0) + 1
+  console.log(req.body)
+  const delta = req.body.like ? 1 : -1
+  const count = (votes.get(breed) ?? 0) + delta
   votes.set(breed, count)
   res.json({ breed: breed, count });
 });

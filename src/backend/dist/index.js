@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
+const body_parser_1 = __importDefault(require("body-parser"));
 dotenv_1.default.config();
 const port = process.env.PORT;
 var corsOptions = {
@@ -14,6 +15,7 @@ var corsOptions = {
 };
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)(corsOptions));
+app.use(body_parser_1.default.json());
 const votes = new Map();
 app.get('/votes/:breed', (req, res) => {
     var _a;
@@ -23,7 +25,9 @@ app.get('/votes/:breed', (req, res) => {
 app.post('/votes/:breed', (req, res) => {
     var _a;
     const breed = req.params.breed;
-    const count = ((_a = votes.get(breed)) !== null && _a !== void 0 ? _a : 0) + 1;
+    console.log(req.body);
+    const delta = req.body.like ? 1 : -1;
+    const count = ((_a = votes.get(breed)) !== null && _a !== void 0 ? _a : 0) + delta;
     votes.set(breed, count);
     res.json({ breed: breed, count });
 });
