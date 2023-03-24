@@ -1,18 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
 import BreedCard, { breedImageLoader } from './components/BreedCard';
+import BreedListing from './components/BreedListing';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <BreedListing />,
   },
   {
     path: "/breed/:breedName",
@@ -27,7 +27,15 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <div className="flex justify-center text-center">
+      <div className="w-3/5">
+        <header className="mt-5 mb-5">
+          <h1 className="text-2xl tracking-widest"><a href="/">DOGGOS</a></h1>
+        </header>
+        <RouterProvider router={router} />
+      </div>
+    </div>
+
   </React.StrictMode>
 );
 

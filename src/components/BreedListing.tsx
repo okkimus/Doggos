@@ -36,32 +36,30 @@ const BreedListing = () => {
         setBreeds(breedList.sort((a, b) => a.breedName > b.breedName ? 1 : -1))
     }
 
-
-
     return (
         <section>
-            <button onClick={fetchBreeds}>Fetch dem doggo breeds!</button>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Breeds</th>
-                            <th>Variants</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        { !breeds ?
-                            <tr>Empty</tr> :
-                            breeds.map(b =>
-                                <tr>
-                                    <td><a href={`/breed/${b.breedName.split(" ").join("-")}`}>{b.breedName}</a></td>
-                                    <td>{b.variants.map(v =>
-                                        <a href={`/breed/${v + "-" + b.baseBreed}`}>{v} </a>
-                                    )}</td>
-                                </tr>
-                            )
-                        }
-                    </tbody>
-                </table>
+            <button className="btn-primary mb-5" onClick={fetchBreeds}>Fetch dem doggo breeds!</button>
+            <table className={`table-auto ${breeds.length === 0 ? "hidden" : ""}`}>
+                <thead className='text-xl text-gray-700 uppercase bg-sky-100 border-2'>
+                    <tr>
+                        <th>Breeds</th>
+                        <th>Variants</th>
+                    </tr>
+                </thead>
+                <tbody className='text-lg text-gray-700 uppercase'>
+                    { !breeds ?
+                        <tr><td>Empty</td><td></td></tr> :
+                        breeds.map(b =>
+                            <tr className="odd:bg-gray-50 even:bg-grey-10 border-2">
+                                <td className="border-2"><a href={`/breed/${b.breedName.split(" ").join("-")}`}>{b.breedName}</a></td>
+                                <td>{b.variants.map(v =>
+                                    <a href={`/breed/${v + "-" + b.baseBreed}`}>{v} </a>
+                                )}</td>
+                            </tr>
+                        )
+                    }
+                </tbody>
+            </table>
         </section>
     );
 }
