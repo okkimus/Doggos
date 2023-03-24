@@ -30,7 +30,7 @@ const BreedListing = () => {
                 })
             }
         })
-        setBreeds(breedList)
+        setBreeds(breedList.sort((a, b) => a.breedName > b.breedName ? 1 : -1))
     }
 
 
@@ -42,7 +42,7 @@ const BreedListing = () => {
                     <thead>
                         <tr>
                             <th>Breeds</th>
-                            <th>Subbreed</th>
+                            <th>Variants</th>
                         </tr>
                     </thead>
                     <tbody>

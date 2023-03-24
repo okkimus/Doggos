@@ -5,7 +5,7 @@ import BreedListing from './components/BreedListing';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
+      <header className="">
         <h1>DOGGOS</h1>
       </header>
       <BreedListing />
