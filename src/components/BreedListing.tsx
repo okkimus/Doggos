@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 interface Breed {
     breedName: string,
+    baseBreed: string,
     variants: Array<string>
 }
 
@@ -21,11 +22,13 @@ const BreedListing = () => {
             if (variants.length > 0) {
                 variants.forEach(v => breedList.push({
                     breedName: v + " " + bk,
+                    baseBreed: bk,
                     variants: variants.filter(variant => variant !== v)
                 }))
             } else {
                 breedList.push({
                     breedName: bk,
+                    baseBreed: bk,
                     variants: []
                 })
             }
@@ -49,10 +52,13 @@ const BreedListing = () => {
                         { !breeds ?
                             <tr>Empty</tr> :
                             breeds.map(b =>
-                            <tr>
-                                <td>{b.breedName}</td>
-                                <td>{b.variants.join(", ")}</td>
-                            </tr>)
+                                <tr>
+                                    <td><a href={`/breed/${b.breedName.split(" ").join("-")}`}>{b.breedName}</a></td>
+                                    <td>{b.variants.map(v =>
+                                        <a href={`/breed/${v + "-" + b.baseBreed}`}>{v} </a>
+                                    )}</td>
+                                </tr>
+                            )
                         }
                     </tbody>
                 </table>
