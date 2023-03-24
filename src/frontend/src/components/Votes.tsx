@@ -31,8 +31,8 @@ const Votes = (props: VotesProps) => {
         <div className="flex flex-col content-center items-center">
             <h3 className="text-3xl font-bold underline mb-10">Likes</h3>
             <p>{likes ?? ""}</p>
-            <button onClick={() => vote(true)} disabled={voted}>+1</button>
-            <button onClick={() => vote(false)} disabled={voted}>-1</button>
+            <button onClick={() => vote(true)} >+1</button>
+            <button onClick={() => vote(false)} >-1</button>
         </div>
     )
 }
