@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import BreedListing from './components/BreedListing';
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <header className="App-header">
         <h1>DOGGOS</h1>
       </header>
+      <BreedListing />
     </div>
   );
 }
