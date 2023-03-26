@@ -40,7 +40,7 @@ const BreedCard = () => {
     return (
         <section className="flex flex-col content-center items-center">
             <h1 className="text-3xl font-bold underline mb-10">{ fullBreed }</h1>
-            <img src={selectedImg} alt="A dog" className="w-3/5"></img>
+            <img src={selectedImg} alt="A dog" className="w-full lg:w-4/5"></img>
             { !exactImagesFound ? <div className="text-red-600">No {fullBreed} found, showing random variant</div> : ""}
             <Votes breedName={fullBreed} />
         </section>
