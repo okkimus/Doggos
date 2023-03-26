@@ -27,13 +27,12 @@ app.get('/votes/:breed', async (req: Request, res: Response) => {
     where: { breed: req.params.breed }
   })
 
-  res.json({ breed: req.params.breed, count: (vote?.upVotes! - vote?.downVotes!) });
+  res.json({ breed: req.params.breed, upVotes: vote?.upVotes ?? 0, downVotes: vote?.downVotes ?? 0 });
 });
 
 app.post('/votes/:breed', async (req: Request, res: Response) => {
   const breed = req.params.breed
   const liked = req.body.like
-  // const existingVotes = await prisma.vote.findFirst({ where: { breed }})
 
   const vote = await prisma.vote.upsert({
     where: { breed },
@@ -44,7 +43,7 @@ app.post('/votes/:breed', async (req: Request, res: Response) => {
   })
   await prisma.$disconnect()
 
-  res.json({ breed: breed, count: vote.upVotes - vote.downVotes });
+  res.json({ breed: breed, upVotes: vote?.upVotes, downVotes: vote?.downVotes });
 });
 
 app.listen(port, () => {

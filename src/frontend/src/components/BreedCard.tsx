@@ -44,7 +44,9 @@ const BreedCard = () => {
                 <img src={selectedImg} alt="A dog" className="max-w-full"></img>
             </div>
             { !exactImagesFound ? <div className="text-red-600">No {fullBreed} found, showing random variant</div> : ""}
-            <Votes breedName={fullBreed} />
+            <div className="mt-5 w-full flex flex-col content-center items-center">
+                <Votes breedName={fullBreed} />
+            </div>
         </section>
     )
 }
