@@ -23,5 +23,9 @@ yarn-debug.log*
 yarn-error.log*
 
 **/.env
+**/.env-prod
 **/build
 **/dist
+
+**/.frontend_location
+**/.ssh_config_name

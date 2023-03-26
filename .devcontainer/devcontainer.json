@@ -6,11 +6,16 @@
 	"dockerComposeFile": "docker-compose.yml",
 	"service": "devcontainer",
 	"postCreateCommand": "cd src/frontend && npm install && cd ../backend && npm install",
-	"workspaceFolder": "/workspace"
+	"workspaceFolder": "/workspace",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
+	"features": {
+		"ghcr.io/devcontainers/features/docker-in-docker:2": {}
+	},
 
+	"mounts": [
+		"source=~/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
+	]
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 

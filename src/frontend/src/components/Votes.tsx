@@ -1,4 +1,5 @@
 import { useState } from "react"
+import config from "../config"
 
 interface VotesProps {
     breedName: string
@@ -7,7 +8,7 @@ interface VotesProps {
 const Votes = (props: VotesProps) => {
     const [likes, setLikes] = useState<number | null>(null)
     const [voted, setVoted] = useState<boolean>(false)
-    const url = `http://localhost:3001/votes/${props.breedName}`
+    const url = `${config.API_URL}/votes/${props.breedName}`
 
     const fetchCount = async () => {
         const count = (await (await fetch(url)).json()).count

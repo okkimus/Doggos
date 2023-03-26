@@ -17,6 +17,10 @@ const app: Express = express();
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
 
+app.get('/', async (req: Request, res: Response) => {
+  res.status(200)
+  res.send("API running!");
+});
 
 app.get('/votes/:breed', async (req: Request, res: Response) => {
   const vote = await prisma.vote.findUnique({
