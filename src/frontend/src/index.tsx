@@ -27,10 +27,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <div className="flex justify-center text-center w-full">
+    <div id="main-container" className="flex justify-center text-center w-full">
       <div className="w-11/12 md:w-4/5 lg:w-3/5">
         <header className="mt-5 mb-5">
-          <h1 className="text-5xl tracking-widest"><a href="/">DOGGOS</a></h1>
+          <h1 className="text-5xl tracking-widest font-semibold"><a href="/">DOGGOS</a></h1>
         </header>
         <RouterProvider router={router} />
       </div>

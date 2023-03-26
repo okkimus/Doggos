@@ -50,10 +50,10 @@ const BreedListing = () => {
                     { !breeds ?
                         <tr><td>Empty</td><td></td></tr> :
                         breeds.map(b =>
-                            <tr className="odd:bg-gray-50 even:bg-grey-10 border-2">
+                            <tr className="odd:bg-gray-50 even:bg-gray-100 border-2">
                                 <td className="border-2"><a href={`/breed/${b.breedName.split(" ").join("-")}`}>{b.breedName}</a></td>
                                 <td>{b.variants.map(v =>
-                                    <a href={`/breed/${v + "-" + b.baseBreed}`} className="hover:text-sky-500">{v} </a>
+                                    <a href={`/breed/${v + "-" + b.baseBreed}`} className="hover:text-sky-300">{v} </a>
                                 )}</td>
                             </tr>
                         )
