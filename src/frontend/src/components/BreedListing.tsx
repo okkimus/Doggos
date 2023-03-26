@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
-
-interface Breed {
-    breedName: string,
-    baseBreed: string,
-    variants: Array<string>
-}
+import Breed from '../types/Breed';
+import BreedRow from './BreedRow';
 
 const BreedListing = () => {
     const [breeds, setBreeds] = useState<Breed[]>([])
@@ -49,14 +45,7 @@ const BreedListing = () => {
                 <tbody className='text-md md:text-xl text-gray-700 uppercase'>
                     { !breeds ?
                         <tr><td>Empty</td><td></td></tr> :
-                        breeds.map(b =>
-                            <tr className="odd:bg-gray-50 even:bg-gray-100 border-2">
-                                <td className="border-2"><a href={`/breed/${b.breedName.split(" ").join("-")}`}>{b.breedName}</a></td>
-                                <td>{b.variants.map(v =>
-                                    <a href={`/breed/${v + "-" + b.baseBreed}`} className="hover:text-sky-300">{v} </a>
-                                )}</td>
-                            </tr>
-                        )
+                        breeds.map((b, i) => <BreedRow breed={b} key={i} />)
                     }
                 </tbody>
             </table>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react"
+import { useState } from "react"
 import config from "../config"
 import useData from "../hooks/useData"
 import DislikeButton from "./DislikeButton"
@@ -19,11 +19,6 @@ const Votes = (props: VotesProps) => {
     const url = `${config.API_URL}/votes/${props.breedName}`
 
     const { data, refresh } = useData<VotesResponse>(url)
-
-    useEffect(() => {
-        console.log("DATA", data)
-
-    }, [data])
 
     const vote = async (like: boolean) => {
         setVoted(true)
