@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import config from "../config"
+import useData from "../hooks/useData"
 import DislikeButton from "./DislikeButton"
 import LikeButton from "./LikeButton"
 
@@ -7,21 +8,22 @@ interface VotesProps {
     breedName: string
 }
 
+interface VotesResponse {
+    breed: string,
+    upVotes: number,
+    downVotes: number
+}
+
 const Votes = (props: VotesProps) => {
-    const [likes, setLikes] = useState<number | null>(null)
-    const [dislikes, setDislikes] = useState<number | null>(null)
     const [voted, setVoted] = useState<boolean>(false)
-    const [loading, setLoading] = useState<boolean>(true)
     const url = `${config.API_URL}/votes/${props.breedName}`
 
-    const fetchCount = useCallback(async () => {
-        const res = (await (await fetch(url)).json())
-        setLikes(res.upVotes)
-        setDislikes(res.downVotes)
-        setLoading(false)
-    }, [url])
+    const { data, refresh } = useData<VotesResponse>(url)
 
-    fetchCount()
+    useEffect(() => {
+        console.log("DATA", data)
+
+    }, [data])
 
     const vote = async (like: boolean) => {
         setVoted(true)
@@ -32,13 +34,13 @@ const Votes = (props: VotesProps) => {
                 "Content-Type": "application/json",
             },
         })
-        fetchCount()
+        refresh()
     }
 
     return (
         <div className="flex justify-around w-3/5">
-            <LikeButton count={likes} trigger={() => vote(true)} disabled={voted} />
-            <DislikeButton count={dislikes} trigger={() => vote(false)} disabled={voted} />
+            <LikeButton count={data?.upVotes} trigger={() => vote(true)} disabled={voted} />
+            <DislikeButton count={data?.downVotes} trigger={() => vote(false)} disabled={voted} />
         </div>
     )
 }
