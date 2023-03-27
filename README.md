@@ -1,46 +1,59 @@
-# Getting Started with Create React App
+# Doggos
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Live version can be found here: https://doggos.hireokkimus.xyz/. Hosted on a VM in UpCloud.
 
-## Available Scripts
+Frontend was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-In the project directory, you can run:
+This is a small project to demonstrate my skills in Node, Typescript and React.
+- [frontend](./src/frontend)
+- [backend](./src/backend)
 
-### `npm start`
+### Spec
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- [x] frontend application with a button to fetch dog breeds from [Dog API](https://dog.ceo/dog-api/)
+- [x] own route for specific dog breed and random image of that breed
+- [x] possibility of liking/disliking a breed (backend to save the data)
+- [x] relational database
+- [ ] make the code clean and awesome
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Running locally
 
-### `npm test`
+You can run this is devcontainer with Docker, VS Code and [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Alternatively, you can run the project on host machine but that requires Node 18 and PostgreSQL.
 
-### `npm run build`
+### Devcontainer
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Devcontainer makes your life easy. It has correct version of Node, PostgreSQL and other needed tools such as Docker (in Docker). It also mounts your `~/.ssh` directory, so you can deploy the project with a ghetto bash script to VMs with Docker running (requires manual server configuration for things like `nginx`, SSL, etc).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Open project in VS Code
+- Open command palette and run `Reopen in container`
+- Creates the devcontainer with Node and PostgreSQL, and installs Node modules and .env automatically
+- to run frontend, execute:
+    - `cd /workspace/src/frontend`
+    - `npm run start`
+    - frontend is running on [port 3000](http://localhost:3000)
+- to run backend, execute:
+    - `cd /workspace/src/backend`
+    - `npm run migrate:dev` to run db migrations
+    - `npm run dev`
+    - backend is running on [port 3001](http://localhost:3001)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deployment
 
-### `npm run eject`
+Requires a server with Docker, running PostgreSQL container in `doggos`-network and SSH config to exist (automatically mounted into devcontainer). Also `env.list` file is setup alongside with nginx-configs + Let's Encrypt for SSL.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Backend runs in a Docker container with Nginx reverse proxy.
+Frontend is statically built and served with Nginx.
+PostgreSQL is running as a Docker container also, but setup made manually.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Run:
+- `bash /workspace/deployment/deploy.sh -t all` to deploy backend and frontend
+- `bash /workspace/deployment/deploy.sh -t backend` to deploy backend
+- `bash /workspace/deployment/deploy.sh -t frontend` to deploy frontend
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Not the optimal solution for deployment, but it works great. To make it better I would:
+- use Github Actions for deployment
+- use a container registry (i.e. Docker Hub) to push the images
+- (in AWS) use service like RDS for DB and ECS to just spin up the backend image (though no experience in setting these up)
+- use S3 for the frontend files + load balancer to get SSL (I have served websites from S3, but without load balancer and SSL)
